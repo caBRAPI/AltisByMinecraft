@@ -1,58 +1,57 @@
-
 # CHANGELOG
 
 All significant changes to this project will be documented in this file.
 
 ## [1.1.0] - 2026-07-14
 ### Added
-- **Sistema dual de execução de produtos**: Campo `run` no metadata do produto (`"console"` ou `"player"`)
-  - `console` (padrão): Comandos executados pelo console, sem verificação de inventário
-  - `player`: Comandos executados pelo jogador, com verificação de inventário quando habilitada
-- **Verificação periódica de pagamentos console**: Task assíncrona roda a cada `check-interval` minutos (padrão 5) processando pagamentos pendentes de produtos modo console
-- **Persistência de pagamentos processados**: Arquivo `data/processed.yml` registra todas as compras processadas com detalhes completos
-- **Javadocs completos**: Documentação Java adicionada a todos os arquivos do projeto (7 classes)
-- **Slot configurável para inventário**: Campo `inventory.slot` define slots vazios mínimos necessários
-  - Valores abaixo de 1 são ajustados para 1 (mínimo)
-  - Valores acima de 36 são ajustados para 36 (máximo inventário jogador)
-- **Log detalhado de comandos**: Cada comando executado é logado com nome, quantidade e executor
-- **Suporte a decimais no check-interval**: Aceita `0.5` (30 segundos), `0.25` (15 segundos), etc.
+- **Dual product execution system**: `run` field in product metadata (`"console"` or `"player"`)
+  - `console` (default): Commands executed by the console, no inventory check
+  - `player`: Commands executed by the player, with inventory check when enabled
+- **Periodic console payment check**: Async task runs every `check-interval` minutes (default 5) processing pending payments for console mode products
+- **Persisted processed payments**: `data/processed.yml` file records all processed purchases with complete details
+- **Complete Javadocs**: Java documentation added to all project files (7 classes)
+- **Configurable inventory slot**: `inventory.slot` field defines the minimum empty slots required
+  - Values below 1 are adjusted to 1 (minimum)
+  - Values above 36 are adjusted to 36 (player inventory maximum)
+- **Detailed command logging**: Each executed command is logged with name, quantity and executor
+- **Decimal support in check-interval**: Accepts `0.5` (30 seconds), `0.25` (15 seconds), etc.
 
 ### Changed
-- **Configuração 100% mensagens**: Todas as mensagens do plugin são configuráveis via `config.yml` (25+ chaves)
-- **Logger sem cores forçadas**: Removidos códigos `&e`, `&c`, &f` do Logger; cores vêm exclusivamente do config.yml
-- **LoginListener condicional**: Listener registrado apenas quando nLogin NÃO está presente (antes era sempre registrado)
-- **VersionChecker atualizado**: Construtor agora recebe `ActivatorPlugin` para acessar configuração
-- **Webhook mensagem clarificada**: Mensagem "Webhook notificação enviada ao Discord: {player}" (sobre o jogador, não para ele)
-- **Verificação de inventário na main thread**: Inventory check roda via `callSyncMethod` para acesso seguro ao inventário
-- **Race condition corrigida**: `CountDownLatch` garante que produtos são despachados antes de marcar API como entregue
-- **Produtos primeiro, API depois**: Dispatch de produtos acontece antes da atualização na API (evita perda em caso de crash)
-- **Pagamento duplicado prevenido**: ID salvo no arquivo mesmo se API update falhar (evita entrega dupla)
+- **100% messages configuration**: All plugin messages are configurable via `config.yml` (25+ keys)
+- **Logger without forced colors**: Removed `&e`, `&c`, `&f` codes from Logger; colors come exclusively from config.yml
+- **Conditional LoginListener**: Listener registered only when nLogin is NOT present (previously always registered)
+- **VersionChecker updated**: Constructor now receives `ActivatorPlugin` to access configuration
+- **Webhook message clarified**: Message "Webhook notification sent to Discord: {player}" (about the player, not to them)
+- **Inventory check on main thread**: Inventory check runs via `callSyncMethod` for safe inventory access
+- **Race condition fixed**: `CountDownLatch` ensures products are dispatched before marking API as delivered
+- **Products first, API after**: Product dispatch happens before API update (avoids loss in case of crash)
+- **Duplicate payment prevented**: ID saved to file even if API update fails (avoids double delivery)
 
 ### Fixed
-- **Thread safety**: `ConcurrentHashMap.newKeySet()` para `processedPayments` (antes era HashSet comum)
-- **Fallback nickname para console**: `filterPendingPayments(null)` agora aceita null para buscar todos pendentes
-- **Produto sem run mode**: Default `getProductRunMode()` retorna `"console"` quando metadata não define `run`
+- **Thread safety**: `ConcurrentHashMap.newKeySet()` for `processedPayments` (previously a common HashSet)
+- **Fallback nickname for console**: `filterPendingPayments(null)` now accepts null to fetch all pending
+- **Product without run mode**: Default `getProductRunMode()` returns `"console"` when metadata does not define `run`
 
 ### Removed
-- **Emojis das mensagens**: Removidos ✔ e ✘ de todas as mensagens
-- **Campos冗antes do Logger**: Removidos campos e métodos não utilizados
+- **Emojis from messages**: Removed ✔ and ✘ from all messages
+- **Redundant fields in Logger**: Removed unused fields and methods
 
 ### Config
 ```yaml
-# Novas chaves adicionadas ao config.yml
-check-interval: 5  # Intervalo em minutos para verificação periódica
+# New keys added to config.yml
+check-interval: 5  # Interval in minutes for periodic check
 ```
 
 ### Product Metadata
 ```json
 {
   "minecraft": {
-    "run": "console",       // "console" (padrão) ou "player"
+    "run": "console",       // "console" (default) or "player"
     "commands": ["give {player} diamond 1"],
-    "message": "&aVocê recebeu um diamante!",
+    "message": "&aYou received a diamond!",
     "inventory": {
-      "enable": false,      // Só funciona quando run = "player"
-      "slot": 4             // Mínimo de slots vazios (1-36, padrão 1)
+      "enable": false,      // Only works when run = "player"
+      "slot": 4             // Minimum empty slots (1-36, default 1)
     }
   }
 }
@@ -61,17 +60,17 @@ check-interval: 5  # Intervalo em minutos para verificação periódica
 ### Processed Payments Record (data/processed.yml)
 ```yaml
 payments:
-  "pagamento-abc123":
+  "payment-abc123":
     player: "Steve"
-    uuid: "uuid-do-jogador"     # Vazio para modo console
+    uuid: "player-uuid"     # Empty for console mode
     api-updated: true
     timestamp: "14/07/2026 15:30:00"
     products:
       - "1x VIP"
-      - "2x Caixa de Surpresa"
-  "pagamento-def456":
+      - "2x Surprise Box"
+  "payment-def456":
     player: "Alex"
-    uuid: ""                     # Vazio (processado pelo console)
+    uuid: ""                     # Empty (processed by console)
     api-updated: true
     timestamp: "14/07/2026 15:35:00"
     products:

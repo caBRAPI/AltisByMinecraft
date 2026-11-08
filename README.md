@@ -4,9 +4,9 @@
 
 <img src="https://www.cabrapi.com.br/images/banner/banner-icon-name-dark.webp" alt="caBRAPI" width="320"/>
 
-**Plugin oficial da caBRAPI para servidores Spigot/Paper.**
+**Official caBRAPI plugin for Spigot/Paper servers.**
 
-Integra automaticamente compras realizadas na plataforma **caBRAPI** ao seu servidor Minecraft.
+Automatically integrates purchases made on the **caBRAPI** platform into your Minecraft server.
 
 <br>
 
@@ -22,140 +22,140 @@ Integra automaticamente compras realizadas na plataforma **caBRAPI** ao seu serv
 
 </div>
 
-## ✨ Recursos
+## ✨ Features
 
-- Sincronização automática das compras da caBRAPI.
-- Entrega automática de produtos.
-- Execução de comandos personalizados.
-- Compatível com **Spigot** e **Paper**.
-- Compatível com **nLogin**.
-- Verificação de inventário cheio.
-- Notificações via Webhook (Discord).
-- Compatível com as versões: `1.16.x`, `1.17.x`, `1.18.x`, `1.19.x`, `1.20.x`, `1.21.x`, `26.x`
+- Automatic synchronization of caBRAPI purchases.
+- Automatic product delivery.
+- Execution of custom commands.
+- Compatible with **Spigot** and **Paper**.
+- Compatible with **nLogin**.
+- Full inventory check.
+- Webhook (Discord) notifications.
+- Compatible with versions: `1.16.x`, `1.17.x`, `1.18.x`, `1.19.x`, `1.20.x`, `1.21.x`, `26.x`
 
 
-## 📦 Instalação
+## 📦 Installation
 
-1. Baixe a versão mais recente em **Releases**.
-2. Coloque o arquivo `.jar` na pasta `plugins/`.
-3. Inicie ou reinicie o servidor.
-4. Configure o arquivo: `plugins/altis/config.yml`
+1. Download the latest version from **Releases**.
+2. Place the `.jar` file in the `plugins/` folder.
+3. Start or restart the server.
+4. Configure the file: `plugins/altis/config.yml`
 
-## ⚙️ Configuração
+## ⚙️ Configuration
 
 ```yaml
 # ========================================
-# Altis - Configuração
+# Altis - Configuration
 # ========================================
 
-# Verificar se há atualizações disponíveis para o plugin.
+# Check for available plugin updates.
 check-update: true
 
-# Versão da configuração (não alterar).
+# Configuration version (do not change).
 version: 1
 
-# Intervalo em minutos para verificar pagamentos pendentes (modo console).
+# Interval in minutes to check pending payments (console mode).
 check-interval: 5
 
-# Chave da API da sua loja.
-# Você pode obtê-la no painel da caBRAPI.
+# Your store API key.
+# You can get it in the caBRAPI panel.
 api-key: ""
 
-# ID da sua loja.
-# Disponível no painel administrativo da caBRAPI.
+# Your store ID.
+# Available in the caBRAPI admin panel.
 store-id: ""
 
 # ========================================
 # Discord Webhook
 # ========================================
-# Variáveis disponíveis em "message":
-#   {player}   -> Nome do jogador
-#   {products} -> Nome(s) do(s) produto(s) (ex: "10x DEMOSTRAÇÃO")
+# Available variables in "message":
+#   {player}   -> Player name
+#   {products} -> Product name(s) (e.g. "10x DEMONSTRATION")
 webhook:
   enable: false
   url: ""
-  message: "{player} comprou {products} na loja!"
+  message: "{player} bought {products} in the store!"
 
 # ========================================
-# Mensagens do Jogo
+# In-Game Messages
 # ========================================
-# Variáveis disponíveis em todas as mensagens:
-#   {player}   -> Nome do jogador
-#   {product}  -> Nome do produto
-#   {quantity} -> Quantidade comprada
-#   {count}    -> Pagamentos ativados
-#   {total}    -> Total de pagamentos encontrados
-#   {status}   -> Código HTTP de retorno
-#   {error}    -> Mensagem de erro
-#   {current}  -> Versão atual do plugin
-#   {latest}   -> Versão mais recente disponível
-#   {paymentId} -> ID do pagamento
-# Cores disponíveis:
-#   &0 Preto    &1 Azul Escuro  &2 Verde Escuro &3 Ciano Escuro
-#   &4 Vermelho &5 Roxo         &6 Dourado      &7 Cinza Claro
-#   &8 Cinza    &9 Azul         &a Verde        &b Ciano
-#   &c Vermelho &d Magenta     &e Amarelo      &f Branco
+# Available variables in all messages:
+#   {player}   -> Player name
+#   {product}  -> Product name
+#   {quantity} -> Amount purchased
+#   {count}    -> Payments activated
+#   {total}    -> Total payments found
+#   {status}   -> HTTP status code
+#   {error}    -> Error message
+#   {current}  -> Current plugin version
+#   {latest}   -> Latest available version
+#   {paymentId} -> Payment ID
+# Available colors:
+#   &0 Black    &1 Dark Blue  &2 Dark Green &3 Dark Cyan
+#   &4 Red &5 Purple         &6 Gold      &7 Light Gray
+#   &8 Gray    &9 Blue         &a Green        &b Cyan
+#   &c Red &d Magenta     &e Yellow      &f White
 message:
   # ========================================
-  # Mensagens para o Jogador
+  # Messages for the Player
   # ========================================
-  permission: "&c&l[ALTIS] &cVocê não possui permissão."
-  inventory: "&e&l[ALTIS] &eSeu inventário está cheio! Precisa de pelo menos &f{slots} &eslot(s) vazio(s) para receber seus itens."
-  reload: "&a&l[ALTIS] &aConfiguração recarregada com sucesso!"
-  activation-success: "&a&l[ALTIS] &a{count} pagamento(s) ativado(s) com sucesso!"
+  permission: "&c&l[ALTIS] &cYou do not have permission."
+  inventory: "&e&l[ALTIS] &eYour inventory is full! You need at least &f{slots} &eempty slot(s) to receive your items."
+  reload: "&a&l[ALTIS] &aConfiguration reloaded successfully!"
+  activation-success: "&a&l[ALTIS] &a{count} payment(s) activated successfully!"
 
   # ========================================
-  # Status do Startup (Console)
+  # Startup Status (Console)
   # ========================================
-  api-key-configured: "&aConfigurada"
-  api-key-not-configured: "&cNão configurada"
-  store-id-configured: "&aConfigurada"
-  store-id-not-configured: "&cNão configurada"
-  configure-credentials: "&cObservação: &fConfigure &capi-key &fe &cstore-id &fno arquivo &bconfig.yml&f."
-  nlogin-detected: "&fnLogin: &aDetectado"
-  nlogin-not-found: "&fnLogin: &eNão encontrado &8- &7utilizando PlayerJoinEvent."
+  api-key-configured: "&aConfigured"
+  api-key-not-configured: "&cNot configured"
+  store-id-configured: "&aConfigured"
+  store-id-not-configured: "&cNot configured"
+  configure-credentials: "&cNote: &fConfigure &capi-key &fand &cstore-id &fin the &bconfig.yml&f file."
+  nlogin-detected: "&fnLogin: &aDetected"
+  nlogin-not-found: "&fnLogin: &eNot found &8- &7using PlayerJoinEvent."
 
   # ========================================
-  # Console - Ativação
+  # Console - Activation
   # ========================================
-  activation-log: "&aAtivado(s) &f{count}/{total} &apagamento(s) para &f{player}"
-  reload-by: "&aConfiguração recarregada por &f{player}"
+  activation-log: "&aActivated &f{count}/{total} &apayment(s) for &f{player}"
+  reload-by: "&aConfiguration reloaded by &f{player}"
 
   # ========================================
-  # Console - Serviços
+  # Console - Services
   # ========================================
-  nlogin-event-received: "&aNLogin event recebido para &f{player}"
-  no-pending-payments: "&eNenhum pagamento pendente para &f{player}"
-  api-request-error: "&cObservação: &fAPI retornou &e{status} &fpara &b{player}"
-  payment-update-failed: "&cObservação: &fFalha ao atualizar pagamento &e{paymentId}&f: HTTP &e{status}"
-  payment-update-error: "&cObservação: &fErro ao atualizar pagamento &e{paymentId}&f: &7{error}"
-  metadata-fetch-error: "&cObservação: &fErro ao buscar metadata do pagamento &e{paymentId}&f: &7{error}"
-  product-fetch-error: "&cObservação: &fErro ao buscar produto: &7{error}"
-  command-executed: "&aExecutando: &f{command} &7(x{quantity}) &apara &f{player} &7via &f{executor}"
-  webhook-sent: "&aWebhook notificação enviada ao Discord: &f{player}"
-  webhook-failed: "&cObservação: &fFalha ao enviar webhook: &7{error}"
+  nlogin-event-received: "&anLogin event received for &f{player}"
+  no-pending-payments: "&eNo pending payments for &f{player}"
+  api-request-error: "&cNote: &fAPI returned &e{status} &ffor &b{player}"
+  payment-update-failed: "&cNote: &fFailed to update payment &e{paymentId}&f: HTTP &e{status}"
+  payment-update-error: "&cNote: &fError updating payment &e{paymentId}&f: &7{error}"
+  metadata-fetch-error: "&cNote: &fError fetching payment metadata &e{paymentId}&f: &7{error}"
+  product-fetch-error: "&cNote: &fError fetching product: &7{error}"
+  command-executed: "&aExecuting: &f{command} &7(x{quantity}) &afor &f{player} &7via &f{executor}"
+  webhook-sent: "&aWebhook notification sent to Discord: &f{player}"
+  webhook-failed: "&cNote: &fFailed to send webhook: &7{error}"
 
   # ========================================
-  # Console - Verificador de Versão
+  # Console - Version Checker
   # ========================================
-  update-check-failed: "&cObservação: &fNão foi possível verificar atualizações (HTTP &e{status}&f)."
-  update-check-invalid: "&cObservação: &fNão foi possível verificar atualizações. Resposta inválida."
-  update-available: "&eObservação: &fUma nova versão está disponível! &a(v{current} → v{latest})"
-  update-current: "&aVocê está utilizando a versão mais recente. &f(v{version})"
+  update-check-failed: "&cNote: &fCould not check for updates (HTTP &e{status}&f)."
+  update-check-invalid: "&cNote: &fCould not check for updates. Invalid response."
+  update-available: "&eNote: &fA new version is available! &a(v{current} → v{latest})"
+  update-current: "&aYou are using the latest version. &f(v{version})"
   update-download: "&fDownload: &bhttps://github.com/caBRAPI/cabrapi-minecraft/releases"
-  update-check-error: "&cObservação: &fNão foi possível verificar atualizações. &7{error}"
+  update-check-error: "&cNote: &fCould not check for updates. &7{error}"
 
   # ========================================
-  # Console - Versão do Config
+  # Console - Config Version
   # ========================================
-  config-outdated: "&eObservação: &fSeu config.yml está desatualizado (v{current}). Recomenda-se atualizá-lo para a versão v{latest}."
-  config-newer: "&eObservação: &fSeu config.yml parece ser de uma versão mais recente (v{current}). Caso haja problemas, verifique as configurações."
+  config-outdated: "&eNote: &fYour config.yml is outdated (v{current}). It is recommended to update it to version v{latest}."
+  config-newer: "&eNote: &fYour config.yml seems to be from a newer version (v{current}). If there are issues, check the configurations."
 
 ```
 
-## 📜 Comandos
+## 📜 Commands
 
-|    Permissão     |      Comando      |            Descrição                |
+|    Permission     |      Command      |            Description                |
 |------------------|-------------------|-------------------------------------|
-| `cabrapi.admin`  | `/cabrapi reload` | Recarrega a configuração do plugin. | 
-
+| `cabrapi.admin`  | `/cabrapi reload` | Reloads the plugin configuration. | 
+```
